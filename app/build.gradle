@@ -1,0 +1,61 @@
+apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    defaultConfig {
+        applicationId "com.zhy.wechatmoments"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    //support
+    compile "com.android.support:appcompat-v7:$rootProject.ext.supportAppcompatVersion"
+    compile "com.android.support:design:$rootProject.ext.supportDesignVersion"
+    compile "com.android.support:recyclerview-v7:$rootProject.ext.recyclerviewV7Version"
+    compile "com.android.support:support-v4:$rootProject.ext.supportAppcompatVersion"
+    //rx
+    compile "io.reactivex:rxjava:$rootProject.ext.rxjavaVersion"
+    compile "io.reactivex:rxandroid:$rootProject.ext.rxandroidVersion"
+
+    //butterknife
+    compile "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
+    apt "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
+
+    //retrofit2
+    compile "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
+    //
+    compile "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofitConverterGsonVersion"
+    //
+    compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.ext.retrofitAdapterRxJavaVersion"
+    //glide
+    compile "com.github.bumptech.glide:glide:$rootProject.ext.glideVersion"
+
+    //test
+    testCompile "junit:junit:$rootProject.ext.junitVersion"
+    testCompile "org.assertj:assertj-core:$rootProject.ext.assertjCoreVersion"
+    testCompile "org.mockito:mockito-core:$rootProject.ext.mockitoCoreVerion"
+    testCompile "org.robolectric:shadows-httpclient:$rootProject.ext.shadowsHttpclientVersion"
+    testCompile("com.squareup.assertj:assertj-android:$rootProject.ext.assertjAndroidVersion") {
+        exclude module: "support-annotations"
+    }
+    testCompile "org.robolectric:robolectric:$rootProject.ext.robolectricVersron"
+}
