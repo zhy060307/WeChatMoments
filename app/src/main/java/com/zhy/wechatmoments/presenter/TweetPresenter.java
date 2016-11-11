@@ -1,10 +1,12 @@
 package com.zhy.wechatmoments.presenter;
 
+import android.util.Log;
+
 import com.zhy.wechatmoments.domain.Tweet;
 import com.zhy.wechatmoments.domain.User;
 import com.zhy.wechatmoments.model.TweetModel;
 import com.zhy.wechatmoments.utils.ListUtils;
-import com.zhy.wechatmoments.utils.RetrofitUtils;
+import com.zhy.wechatmoments.utils.RetrofitHelper;
 import com.zhy.wechatmoments.view.IMainView;
 
 import java.util.ArrayList;
@@ -26,6 +28,8 @@ public class TweetPresenter {
 
     public static final int PAGE_SIZE = 5;
 
+    private static final String TAG = TweetPresenter.class.getSimpleName();
+
     private int pageIndex = 0;
     private IMainView mainView;
     private TweetModel tweetModel;
@@ -34,7 +38,7 @@ public class TweetPresenter {
 
     public TweetPresenter(IMainView mainView) {
         this.mainView = mainView;
-        this.tweetModel = RetrofitUtils.createService(TweetModel.class);
+        this.tweetModel = RetrofitHelper.getInstance().createService(TweetModel.class);
     }
 
 
@@ -75,12 +79,12 @@ public class TweetPresenter {
                 .subscribe(new Subscriber<Object>() {
                     @Override
                     public void onCompleted() {
-
+                        Log.i(TAG, "query tweets completed!");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e(TAG, e.getMessage());
                     }
 
                     @Override

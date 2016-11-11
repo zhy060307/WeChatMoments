@@ -5,7 +5,7 @@ import com.zhy.wechatmoments.domain.User;
 import com.zhy.wechatmoments.model.TweetModel;
 import com.zhy.wechatmoments.presenter.TweetPresenter;
 import com.zhy.wechatmoments.utils.ListUtils;
-import com.zhy.wechatmoments.utils.RetrofitUtils;
+import com.zhy.wechatmoments.utils.RetrofitHelper;
 import com.zhy.wechatmoments.view.IMainView;
 
 import org.junit.Before;
@@ -36,7 +36,7 @@ import static org.mockito.Mockito.mock;
 @Config(constants = BuildConfig.class)
 public class TweetsPresenterTest {
 
-    private TweetModel tweetModel = RetrofitUtils.createService(TweetModel.class);
+    private TweetModel tweetModel = RetrofitHelper.getInstance().createService(TweetModel.class);
 
 
     private TweetModel mockModel;
