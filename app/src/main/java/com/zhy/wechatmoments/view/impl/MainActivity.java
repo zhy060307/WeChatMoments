@@ -39,11 +39,10 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     private LoadMoreWrapper loadMoreWrapper;
     private UserInfoView userInfoView;
 
-    private int pageIndex = 0;
-
     private List<Tweet> tweets = new ArrayList<>();
 
     private TweetPresenter presenter;
+    private boolean isLoadMore;
 
 
     @Override
@@ -83,13 +82,13 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     }
 
     private void refresh() {
-        pageIndex = 0;
-        presenter.getTweetsByPage(pageIndex);
+        isLoadMore = false;
+        presenter.getRefreshTweets();
     }
 
     private void loadMore() {
-        pageIndex++;
-        presenter.getTweetsByPage(pageIndex);
+        isLoadMore = true;
+        presenter.getLoadMoreTweets();
     }
 
     private HeaderAndFooterWrapper getHeader() {
@@ -142,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
             refreshLayout.setRefreshing(false);
         }
 
-        if (pageIndex == 0) {
+        if (!isLoadMore) {
             this.tweets.clear();
         }
 

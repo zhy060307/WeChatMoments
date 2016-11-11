@@ -25,6 +25,8 @@ import rx.subscriptions.CompositeSubscription;
 public class TweetPresenter {
 
     public static final int PAGE_SIZE = 5;
+
+    private int pageIndex = 0;
     private IMainView mainView;
     private TweetModel tweetModel;
     private CompositeSubscription compositeSubscription;
@@ -88,7 +90,7 @@ public class TweetPresenter {
                             mainView.showUserInfo((User) o);
                         } else if (o instanceof ArrayList) {
                             allTweets = (ArrayList) o;
-                            getTweetsByPage(0);
+                            getRefreshTweets();
                         }
                     }
                 });
@@ -105,13 +107,11 @@ public class TweetPresenter {
                     tweetList.add(tweet);
                 }
             }
-
         }
         return tweetList;
     }
 
-    public void getTweetsByPage(int pageIndex) {
-
+    private void getTweetsByPage() {
         List<Tweet> tweetList;
         if (ListUtils.isNotEmpty(allTweets)) {
             int size = allTweets.size();
@@ -120,5 +120,15 @@ public class TweetPresenter {
             tweetList = allTweets.subList(pageIndex * PAGE_SIZE, endIndex);
             mainView.showTweets(tweetList);
         }
+    }
+
+    public void getRefreshTweets() {
+        pageIndex = 0;
+        getTweetsByPage();
+    }
+
+    public void getLoadMoreTweets() {
+        pageIndex++;
+        getTweetsByPage();
     }
 }
